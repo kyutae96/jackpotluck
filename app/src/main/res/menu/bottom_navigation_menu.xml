@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_main"
+        android:icon="@drawable/baseline_home_24"
+        android:title="Main" />
+
+    <item
+        android:id="@+id/nav_log"
+        android:icon="@drawable/baseline_save_24"
+        android:title="Data" />
+
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@drawable/baseline_settings_24"
+        android:title="Setting" />
+</menu>
