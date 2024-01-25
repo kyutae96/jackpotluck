@@ -41,7 +41,8 @@ android {
 }
 
 dependencies {
-
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation ("org.apache.commons:commons-math3:3.6.1")
     implementation ("com.airbnb.android:lottie:3.4.0")
 
     implementation ("androidx.recyclerview:recyclerview:1.3.1")

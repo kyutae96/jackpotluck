@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kyutae.jackpotluck.AppClass
 import com.kyutae.jackpotluck.NumberAdapter
 import com.kyutae.jackpotluck.databinding.FragmentMainBinding
+import com.kyutae.jackpotluck.interfaces.CheckBoxClickListener
 import com.kyutae.jackpotluck.objects.Animations
 import com.kyutae.jackpotluck.objects.Utils
 import kotlinx.coroutines.CoroutineScope
@@ -56,6 +57,14 @@ class MainFragment : Fragment() {
         }
 
 
+//        CoroutineScope(Dispatchers.Default).launch {
+//            val resultY = PearsonUtil.pearsonCorrelation()
+//
+//            Log.e(TAG, "최종 X 값: ${resultY.joinToString(", ")}")
+//
+//        }
+
+
         bind.startBtn.setOnClickListener {
             val numberOfLists = 5
             val lottoLists = Utils.generateMultipleLottoLists(numberOfLists)
@@ -68,6 +77,13 @@ class MainFragment : Fragment() {
             val recyclerView = bind.recyclerView
             recyclerView.layoutManager = LinearLayoutManager(context)
             val adapter = NumberAdapter(lottoLists)
+
+            adapter.setOnCheckBoxClickListener(object : CheckBoxClickListener {
+                override fun onClickCheckBox(flag: Int, pos: Int) {
+                    Log.d("__checkboxClick__", "$flag / $pos")
+                }
+            })
+
             recyclerView.adapter = adapter
             adapter.notifyDataSetChanged()
             startClick()
@@ -127,5 +143,7 @@ class MainFragment : Fragment() {
         job.cancel()
         super.onDestroy()
     }
+
+
 
 }

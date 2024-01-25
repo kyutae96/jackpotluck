@@ -1,15 +1,20 @@
 package com.kyutae.jackpotluck
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.kyutae.jackpotluck.interfaces.CheckBoxClickListener
 
-class NumberAdapter(private val lottoLists: List<List<Int>>) : RecyclerView.Adapter<NumberViewHolder>() {
-
+class NumberAdapter(private val lottoLists: List<List<Int>>) :
+    RecyclerView.Adapter<NumberViewHolder>() {
+    private val TAG = this::class.java.simpleName
+    var mListener: CheckBoxClickListener? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumberViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_number, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_number, parent, false)
         return NumberViewHolder(itemView)
     }
 
@@ -25,6 +30,18 @@ class NumberAdapter(private val lottoLists: List<List<Int>>) : RecyclerView.Adap
 //        holder.textView.text = "리스트 ${position + 1}: $lottoList"
 
 
+        holder.checkBox.setOnClickListener {
+
+            if (holder.checkBox.isChecked){
+
+                mListener?.onClickCheckBox(1, position)
+                Log.e(TAG, "${position} : ${lottoLists[position]}")
+//                AppClass.prefs.setString("first", "hi")
+            }else{
+                mListener?.onClickCheckBox(0, position)
+                Log.e(TAG, "${position} : Not checked")
+            }
+        }
 
 
         // 각 숫자에 대한 색상 설정
@@ -37,6 +54,7 @@ class NumberAdapter(private val lottoLists: List<List<Int>>) : RecyclerView.Adap
         setNumberColor(context, holder.textView5, lottoList[4])
         setNumberColor(context, holder.textView6, lottoList[5])
     }
+
     private fun setNumberColor(context: Context, textView: TextView, number: Int) {
         val colorResId = when {
             number <= 10 -> R.drawable.circle_yellow
@@ -49,7 +67,13 @@ class NumberAdapter(private val lottoLists: List<List<Int>>) : RecyclerView.Adap
         textView.setBackgroundResource(colorResId)
 
     }
+
     override fun getItemCount(): Int {
         return lottoLists.size
+    }
+
+    /* 리스너 메소드 */
+    fun setOnCheckBoxClickListener(clickCheckBoxListener: CheckBoxClickListener) {
+        this.mListener = clickCheckBoxListener
     }
 }
